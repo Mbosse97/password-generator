@@ -35,6 +35,8 @@ var characterLength = 128;
 
 
 function passwordRequirements (){
+
+// Adds all prompts for password required
   var lengthRequired = window.prompt("How many characters does you password need to be?");
   var lengthRequiredNumber = parseInt(lengthRequired);
 
@@ -45,6 +47,11 @@ function passwordRequirements (){
   
   while (lengthRequiredNumber<8 || lengthRequiredNumber>128) {
     alert("Password length must be between 8 and 128 characters")
+    return;
+  }
+
+  while (lengthRequired ===""){
+    alert("Please enter a value")
     return;
   }
 
@@ -59,6 +66,7 @@ function passwordRequirements (){
 
   var totalRequirements = "";
 
+  // selects dataset of arrays based on requirements chosen
   if (upperRequired && specRequired && numRequired) {
     totalRequirements = charSet.concat(charSetUpper,numset,specialChar);
   } else if (upperRequired && specRequired && !numRequired) {
@@ -78,57 +86,21 @@ function passwordRequirements (){
   var totalRequirementsString = totalRequirements.join("");
   var passwordchosen = "";
 
+
+  // randomises the string based on the requirements
   for (var i = 1; i < lengthRequired; i++) {
     passwordchosen += totalRequirementsString.charAt(Math.floor(Math.random()*totalRequirements.length))
   }
 
   console.log(passwordchosen)
 
+  // Write password to the #password input
+  var passwordText = document.querySelector("#password");
+
+  passwordText.value = passwordchosen;
   }
 
+  // Add event listener to generate button
 generateBtn.addEventListener("click", passwordRequirements);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-function generator(){
-  var maxlength = 128;
-  var characterLength = chosenLength;
-  var charSet = "abcdefghijklmnopqrstuvwxyz"
-  var charSetUpper = charSet.toUpperCase()
-  var numset = [1,2,3,4,5,6,7,8,9,0]
-  var specialChar = "!@#$%^&?"
-  var pass = ""
-
-  for (var i = 8; i < chosenLength; i++) {
-    pass += charSet.charAt(Math.floor(Math.random()*charSet.length))
-  }
-
-  console.log(pass);
-
-}
-
-
-
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
-
-}
-
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
